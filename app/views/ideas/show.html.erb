@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @idea %>
+<%= image_tag(@idea.picture_url, width: 200) if @idea.picture.present? %>
+<br>
+<br>
+<div>
+  <%= link_to "Edit this idea", edit_idea_path(@idea) %> |
+  <%= link_to "Back to ideas", ideas_path %>
+<br>
+<br>
+  <%= button_to "Destroy this idea", @idea, method: :delete %>
+</div>
