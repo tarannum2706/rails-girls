@@ -10,6 +10,9 @@ class IdeasController < ApplicationController
   def show
   end
 
+  def search
+    @ideas = Idea.where("name LIKE?", "%" + params[:q] + "%")
+  end
   # GET /ideas/new
   def new
     @idea = Idea.new
