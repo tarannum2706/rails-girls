@@ -1,5 +1,6 @@
 class IdeasController < ApplicationController
-  before_action :set_idea, only: %i[ show edit update destroy ]
+  before_action :set_idea, only: [ :show, :edit, :update, :destroy ]
+  before_action :authenticate_user!, except: [:index]
 
   # GET /ideas or /ideas.json
   def index
@@ -25,7 +26,6 @@ class IdeasController < ApplicationController
   # POST /ideas or /ideas.json
   def create
     @idea = Idea.new(idea_params)
-
     respond_to do |format|
       if @idea.save
         format.html { redirect_to idea_url(@idea), notice: "Idea was successfully created." }
@@ -53,7 +53,6 @@ class IdeasController < ApplicationController
   # DELETE /ideas/1 or /ideas/1.json
   def destroy
     @idea.destroy
-
     respond_to do |format|
       format.html { redirect_to ideas_url, notice: "Idea was successfully destroyed." }
       format.json { head :no_content }

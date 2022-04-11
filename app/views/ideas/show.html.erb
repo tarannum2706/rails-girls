@@ -1,11 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @idea %>
-<%= image_tag(@idea.picture_url, width: 200) if @idea.picture.present? %>
+<%= image_tag(@idea.picture_url, width: "20%") if @idea.picture.present? %>
 <br>
 <br>
 <div>
   <%= link_to "Edit", edit_idea_path(@idea), :class => 'btn btn-secondary' %>
-  <%= link_to "Destroy", @idea, method: :delete, :class => 'btn btn-danger' %>
+  <%= button_to "Destroy", @idea, :method => :delete, :class => 'btn btn-danger' %>
   <%= link_to "Back", ideas_path, :class => 'btn btn-primary'%>
 </div>
