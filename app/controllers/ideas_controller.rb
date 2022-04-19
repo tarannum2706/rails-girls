@@ -1,11 +1,11 @@
 class IdeasController < ApplicationController
   before_action :set_idea, only: [ :show, :edit, :update, :destroy ]
   before_action :authenticate_user!, except:[:index, :show]
-  before_action :correct_user, only: [:edit, :update, :delete]
+  # before_action :correct_user, only: [:delete]
 
   # GET /ideas or /ideas.json
   def index
-    @ideas = Idea.all
+    @ideas = Idea.where(user_id: current_user)
   end
 
   # GET /ideas/1 or /ideas/1.json
@@ -17,7 +17,7 @@ class IdeasController < ApplicationController
   end
   # GET /ideas/new
   def new
-  @idea = current_user.ideas.build
+  @idea = current_user.ideas.new
   end
 
   # GET /ideas/1/edit
@@ -26,7 +26,7 @@ class IdeasController < ApplicationController
 
   # POST /ideas or /ideas.json
   def create
-    @idea = current_user.ideas.build(idea_params)
+    @idea = current_user.ideas.new(idea_params)
     respond_to do |format|
       if @idea.save
         format.html { redirect_to idea_url(@idea), notice: "Idea was successfully created." }
@@ -60,10 +60,10 @@ class IdeasController < ApplicationController
     end
   end
 
-  def correct_user
-  @idea = current_user.ideas.find_by(id: params[:id])
-  redirect_to ideas_path
-  end
+  # def correct_user
+  #  @idea = current_user.ideas.find_by(id: params[:id])
+  #  redirect_to ideas_path
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -3,12 +3,10 @@
 <h1>Ideas</h1>
 <div id="ideas">
   <% @ideas.each do |idea| %>
-  <% if idea.user == current_user %>
   <%= render idea %>
     <%=link_to "Read More", idea, :class => 'btn btn-primary'%>
   <% end %>
-  <% end %>
 </div>
 <% else %>
-<p>There are not any idea currently in the system.</p>
+<p>There are not any idea currently.</p>
 <% end %>
