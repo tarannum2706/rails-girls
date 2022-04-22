@@ -1,11 +1,14 @@
 class IdeasController < ApplicationController
   before_action :set_idea, only: [ :show, :edit, :update, :destroy ]
-  before_action :authenticate_user!, except:[:index, :show]
-  # before_action :correct_user, only: [:delete]
+  before_action :authenticate_user!, except:[:index]
 
   # GET /ideas or /ideas.json
   def index
-    @ideas = Idea.where(user_id: current_user)
+    if user_signed_in?
+     @ideas = Idea.where(user_id: current_user)
+    else
+     @ideas = Idea.order("created_at asc")
+    end 
   end
 
   # GET /ideas/1 or /ideas/1.json
@@ -15,9 +18,10 @@ class IdeasController < ApplicationController
   def search
     @ideas = Idea.where("name LIKE?", "%" + params[:q] + "%")
   end
+
   # GET /ideas/new
   def new
-  @idea = current_user.ideas.new
+  @idea = current_user.ideas.build
   end
 
   # GET /ideas/1/edit
@@ -26,7 +30,7 @@ class IdeasController < ApplicationController
 
   # POST /ideas or /ideas.json
   def create
-    @idea = current_user.ideas.new(idea_params)
+    @idea = current_user.ideas.build(idea_params)
     respond_to do |format|
       if @idea.save
         format.html { redirect_to idea_url(@idea), notice: "Idea was successfully created." }
@@ -60,15 +64,11 @@ class IdeasController < ApplicationController
     end
   end
 
-  # def correct_user
-  #  @idea = current_user.ideas.find_by(id: params[:id])
-  #  redirect_to ideas_path
-  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_idea
-      @idea = Idea.find(params[:id])
+       @idea = Idea.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

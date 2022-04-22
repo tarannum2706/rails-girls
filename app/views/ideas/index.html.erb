@@ -1,12 +1,9 @@
 <p style="color: green"><%= notice %></p>
-<% if user_signed_in? %>
 <h1>Ideas</h1>
 <div id="ideas">
   <% @ideas.each do |idea| %>
   <%= render idea %>
     <%=link_to "Read More", idea, :class => 'btn btn-primary'%>
   <% end %>
+
 </div>
-<% else %>
-<p>There are not any idea currently.</p>
-<% end %>

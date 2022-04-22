@@ -2,7 +2,6 @@
   <% if idea.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(idea.errors.count, "error") %> prohibited this idea from being saved:</h2>
-
       <ul>
         <% idea.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -26,7 +25,7 @@
     <%= form.file_field :picture %>
   </div>
   <br/>
-  
+
   <div>
     <%= form.number_field :user_id, id: :idea_user_id, value: current_user.id, type: :hidden %>
   </div>
