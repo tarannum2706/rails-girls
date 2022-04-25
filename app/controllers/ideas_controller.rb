@@ -1,14 +1,14 @@
 class IdeasController < ApplicationController
   before_action :set_idea, only: [ :show, :edit, :update, :destroy ]
-  before_action :authenticate_user!, except:[:index]
+  before_action :authenticate_user!, except:[:index,:show,:search]
 
   # GET /ideas or /ideas.json
   def index
     if user_signed_in?
      @ideas = Idea.where(user_id: current_user)
     else
-     @ideas = Idea.order("created_at asc")
-    end 
+     @pagy, @ideas = pagy(Idea.order("created_at asc"), items:3)
+    end
   end
 
   # GET /ideas/1 or /ideas/1.json
@@ -21,7 +21,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/new
   def new
-  @idea = current_user.ideas.build
+  @idea = current_user.ideas.new
   end
 
   # GET /ideas/1/edit
@@ -30,7 +30,7 @@ class IdeasController < ApplicationController
 
   # POST /ideas or /ideas.json
   def create
-    @idea = current_user.ideas.build(idea_params)
+    @idea = current_user.ideas.new(idea_params)
     respond_to do |format|
       if @idea.save
         format.html { redirect_to idea_url(@idea), notice: "Idea was successfully created." }
