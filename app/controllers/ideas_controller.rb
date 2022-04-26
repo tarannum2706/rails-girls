@@ -5,7 +5,7 @@ class IdeasController < ApplicationController
   # GET /ideas or /ideas.json
   def index
     if user_signed_in?
-     @ideas = Idea.where(user_id: current_user)
+      @pagy, @ideas = pagy(Idea.where(user_id: current_user),items:4)
     else
      @pagy, @ideas = pagy(Idea.order("created_at asc"), items:3)
     end
