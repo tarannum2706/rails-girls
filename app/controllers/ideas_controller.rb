@@ -7,7 +7,7 @@ class IdeasController < ApplicationController
     if user_signed_in?
       @pagy, @ideas = pagy(Idea.where(user_id: current_user),items:4)
     else
-     @pagy, @ideas = pagy(Idea.order("created_at asc"), items:3)
+      @pagy, @ideas = pagy(Idea.order("created_at asc"), items:3)
     end
   end
 
@@ -21,7 +21,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/new
   def new
-  @idea = current_user.ideas.new
+    @idea = current_user.ideas.new
   end
 
   # GET /ideas/1/edit
